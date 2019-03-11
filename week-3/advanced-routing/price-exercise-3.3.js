@@ -1,3 +1,18 @@
+var header = require('../../price-header.js');
+var header = header.display("Josh", "Price", "Exercise 3.3");
+console.log(header + '\n');
+
+/*
+============================================
+; Title:  price-exercise-3.3.js
+; Author: Josh Price
+; Date:   10 March 2019
+; Modified By: Josh Price
+; Description: Advanced Routing
+;===========================================
+*/
+
+//Start Program
 var express = require("express");
 var http = require("http");
 var path = require("path");
@@ -19,3 +34,4 @@ app.get("/:employeeId", function(req, res){
 http.createServer(app).listen(8080, function() {
     console.log("Application started on port 8080")
 });
+//End Program

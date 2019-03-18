@@ -1,0 +1,8 @@
+{
+    "name": "status-codes",
+    "author": "Josh Price",
+    "private": true,
+    "dependencies": {
+        "express": "^4.16.4"
+    }
+}

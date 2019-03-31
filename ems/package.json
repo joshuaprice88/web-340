@@ -1,0 +1,13 @@
+{
+    "name": "ems",
+    "author": "Josh Price",
+    "private": true,
+    "version": "0.0.1",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "ejs": "^2.6.1",
+        "express": "^4.16.4",
+        "mongoose": "^5.4.20",
+        "morgan": "^1.9.1"
+    }
+}

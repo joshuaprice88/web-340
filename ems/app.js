@@ -4,7 +4,14 @@ var http = require ('http');
 var path = require('path');
 var logger = require('morgan');
 var mongoose = require("mongoose");
+var helmet = require("helmet");
+var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
+var csrf = require("csurf");
 var employee = require('./models/employee');
+
+// csrf protection
+var csrfProtection = csrf({cookie: true});
 
 //Connecting to MongoDB Database
 var mongoDB = "mongodb+srv://joshuaprice1:test123@ems-bm9ej.mongodb.net/test?retryWrites=true"
@@ -31,7 +38,23 @@ app.set("view engine", "ejs");
 
 app.use(express.static(__dirname + '/public'));
 
+app.use(helmet.xssFilter());
 app.use(logger("short"));
+
+app.use(bodyParser.urlencoded ({
+    extended: true;
+}));
+
+app.use(cookieParser());
+app.use(csrfProtection);
+
+app.use(function(req, res, next) {
+    var token = req.csrfToken();
+
+    res.cookie('XSRF-TOKEN', token);
+    res.locals.csrfToken = token;
+    next();
+});
 
 var employee = new employee({
     firstName: "Jon",
@@ -44,6 +67,19 @@ app.get("/", function (req, res) {
         message: "Show us your slurp game!"
     });
 });
+
+app.get("/new", function (req, res){
+    res.render("new", {
+        title: "Home",
+        message: "Add New Employee"
+    })
+})
+
+app.post("/process", function(res, req) {
+    console.log(req);
+    console.log(req.csrfToken);
+    Response.redirect("/");
+})
 
 //Creating Server
 http.createServer(app).listen(8080, function() {
